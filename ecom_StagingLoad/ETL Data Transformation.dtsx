@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="ETL Data Transformation"
   DTS:PackageType="5"
-  DTS:VersionBuild="16"
-  DTS:VersionGUID="{C8FBBD3D-9E95-48F4-A328-EA61C590DD3F}">
+  DTS:VersionBuild="21"
+  DTS:VersionGUID="{0F397FE4-5184-407F-8C45-534DF6DB8A42}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -158,6 +158,107 @@
               </outputs>
             </component>
             <component
+              refId="Package\Transform Staging Customer\Derived Column 1"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Transform Staging Customer\Derived Column 1.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transform Staging Customer\Derived Column 1.Inputs[Derived Column Input].Columns[customer_city]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="customer_city"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_city]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[TRIM](#{Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_city]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(customer_city)</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform Staging Customer\Derived Column 1.Inputs[Derived Column Input].Columns[customer_state]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="customer_state"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_state]"
+                      truncationRowDisposition="FailComponent"
+                      usageType="readWrite">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[TRIM](#{Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_state]})</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">TRIM(customer_state)</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform Staging Customer\Derived Column 1.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Transform Staging Customer\Derived Column 1.Inputs[Derived Column Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform Staging Customer\Derived Column 1.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Transform Staging Customer\Derived Column 1.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform Staging Customer\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Transform Staging Customer\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Transform Staging Customer\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Transform Staging Customer\Derived Column 1.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
               refId="Package\Transform Staging Customer\OLE DB Destination"
               componentClassID="Microsoft.OLEDBDestination"
               contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
@@ -236,15 +337,16 @@
                       cachedLength="50"
                       cachedName="customer_id"
                       externalMetadataColumnId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_id]"
-                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_id]" />
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_id]" />
                     <inputColumn
                       refId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_unique_id]"
                       cachedCodepage="1252"
                       cachedDataType="str"
                       cachedLength="50"
                       cachedName="customer_unique_id"
+                      cachedSortKeyPosition="1"
                       externalMetadataColumnId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_unique_id]"
-                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_unique_id]" />
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_unique_id]" />
                     <inputColumn
                       refId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_zip_code_prefix]"
                       cachedCodepage="1252"
@@ -252,7 +354,7 @@
                       cachedLength="50"
                       cachedName="customer_zip_code_prefix"
                       externalMetadataColumnId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_zip_code_prefix]"
-                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_zip_code_prefix]" />
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_zip_code_prefix]" />
                     <inputColumn
                       refId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_city]"
                       cachedCodepage="1252"
@@ -260,7 +362,7 @@
                       cachedLength="50"
                       cachedName="customer_city"
                       externalMetadataColumnId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_city]"
-                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_city]" />
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_city]" />
                     <inputColumn
                       refId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[customer_state]"
                       cachedCodepage="1252"
@@ -268,7 +370,7 @@
                       cachedLength="50"
                       cachedName="customer_state"
                       externalMetadataColumnId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[customer_state]"
-                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_state]" />
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_state]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -538,18 +640,344 @@
                 </output>
               </outputs>
             </component>
+            <component
+              refId="Package\Transform Staging Customer\Slowly Changing Dimension"
+              componentClassID="Microsoft.SCD"
+              contactInfo="Slowly Changing Dimension;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Updates a SQL Server Analysis Services data warehouse dimension. Update dimension records that are already present and  insert dimension records that aren't. For example, update the DimProduct table of the AdventureWorksDW OLAP database with data from the Products table in the AdventureWorks OLTP database."
+              name="Slowly Changing Dimension"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SELECT statement used to create a schema rowset."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the WHERE clause in the SELECT statement that selects the current row among rows with identical business keys."
+                  name="CurrentRowWhere"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether historical attribute updates are directed to the transformation output for changing attribute updates."
+                  name="UpdateChangingAttributeHistory">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when columns with fixed attributes contain changes."
+                  name="FailOnFixedAttributeChange">true</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the column name for the inferred member."
+                  name="InferredMemberIndicator"></property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether inferred member updates are detected."
+                  name="EnableInferredMember">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the transformation fails when a lookup of an existing record fails."
+                  name="FailOnLookupFailure">false</property>
+                <property
+                  dataType="System.UInt32"
+                  description="Specifies that all rows in the input are new or the transformation detects the change type."
+                  name="IncomingRowChangeType"
+                  typeConverter="IncomingRowChangeType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Transform Staging Customer\Slowly Changing Dimension.Connections[LookupConnection]"
+                  description="Defines the connection to use for lookups in the dimension table"
+                  name="LookupConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Transform Staging Customer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+                  name="Slowly Changing Dimension Input">
+                  <externalMetadataColumns
+                    isUsed="True" />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform Staging Customer\Slowly Changing Dimension.Outputs[Unchanged Output]"
+                  description="Unchanged rows"
+                  exclusionGroup="1"
+                  name="Unchanged Output"
+                  synchronousInputId="Package\Transform Staging Customer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform Staging Customer\Slowly Changing Dimension.Outputs[New Output]"
+                  description="New rows"
+                  exclusionGroup="1"
+                  name="New Output"
+                  synchronousInputId="Package\Transform Staging Customer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform Staging Customer\Slowly Changing Dimension.Outputs[Fixed Attribute Output]"
+                  description="Rows with changes in columns tagged FixedAttribute"
+                  exclusionGroup="1"
+                  name="Fixed Attribute Output"
+                  synchronousInputId="Package\Transform Staging Customer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform Staging Customer\Slowly Changing Dimension.Outputs[Changing Attribute Updates Output]"
+                  description="These rows contain new information for ChangingAttribute (Type 1) column changes"
+                  exclusionGroup="1"
+                  name="Changing Attribute Updates Output"
+                  synchronousInputId="Package\Transform Staging Customer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform Staging Customer\Slowly Changing Dimension.Outputs[Historical Attribute Inserts Output]"
+                  description="HistoricalAttribute (Type 2) changes result in these new rows"
+                  exclusionGroup="2"
+                  name="Historical Attribute Inserts Output"
+                  synchronousInputId="Package\Transform Staging Customer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Transform Staging Customer\Slowly Changing Dimension.Outputs[Inferred Member Updates Output]"
+                  description="Information to update unpopulated initial dimension row"
+                  exclusionGroup="1"
+                  name="Inferred Member Updates Output"
+                  synchronousInputId="Package\Transform Staging Customer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Transform Staging Customer\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Transform Staging Customer\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Transform Staging Customer\Sort.Inputs[Sort Input].Columns[customer_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="customer_id"
+                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform Staging Customer\Sort.Inputs[Sort Input].Columns[customer_unique_id]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="customer_unique_id"
+                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_unique_id]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform Staging Customer\Sort.Inputs[Sort Input].Columns[customer_zip_code_prefix]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="customer_zip_code_prefix"
+                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_zip_code_prefix]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform Staging Customer\Sort.Inputs[Sort Input].Columns[customer_city]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="customer_city"
+                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_city]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Transform Staging Customer\Sort.Inputs[Sort Input].Columns[customer_state]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="50"
+                      cachedName="customer_state"
+                      lineageId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_state]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Transform Staging Customer\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_id]"
+                      name="customer_id">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_unique_id]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_unique_id]"
+                      name="customer_unique_id"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_unique_id]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_zip_code_prefix]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_zip_code_prefix]"
+                      name="customer_zip_code_prefix">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_zip_code_prefix]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_city]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_city]"
+                      name="customer_city">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_city]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_state]"
+                      codePage="1252"
+                      dataType="str"
+                      length="50"
+                      lineageId="Package\Transform Staging Customer\Sort.Outputs[Sort Output].Columns[customer_state]"
+                      name="customer_state">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output].Columns[customer_state]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
           </components>
           <paths>
             <path
               refId="Package\Transform Staging Customer.Paths[Derived Column Output]"
-              endId="Package\Transform Staging Customer\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              endId="Package\Transform Staging Customer\Sort.Inputs[Sort Input]"
               name="Derived Column Output"
               startId="Package\Transform Staging Customer\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Transform Staging Customer.Paths[Derived Column Output1]"
+              endId="Package\Transform Staging Customer\Slowly Changing Dimension.Inputs[Slowly Changing Dimension Input]"
+              name="Derived Column Output"
+              startId="Package\Transform Staging Customer\Derived Column 1.Outputs[Derived Column Output]" />
             <path
               refId="Package\Transform Staging Customer.Paths[OLE DB Source Output]"
               endId="Package\Transform Staging Customer\Derived Column.Inputs[Derived Column Input]"
               name="OLE DB Source Output"
               startId="Package\Transform Staging Customer\OLE DB Source.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\Transform Staging Customer.Paths[Sort Output]"
+              endId="Package\Transform Staging Customer\Derived Column 1.Inputs[Derived Column Input]"
+              name="Sort Output"
+              startId="Package\Transform Staging Customer\Sort.Outputs[Sort Output]" />
           </paths>
         </pipeline>
       </DTS:ObjectData>
@@ -3464,6 +3892,26 @@
           Size="198,42"
           Id="Package\Transform Staging order"
           TopLeft="481,221" />
+        <NodeLayout
+          Size="222,42"
+          Id="Package\Transform Staging order item"
+          TopLeft="495,315" />
+        <NodeLayout
+          Size="216,42"
+          Id="Package\Transform Staging Payment"
+          TopLeft="499,412" />
+        <NodeLayout
+          Size="210,42"
+          Id="Package\Transform Staging Product"
+          TopLeft="498,509" />
+        <NodeLayout
+          Size="285,42"
+          Id="Package\Transform Staging product category name"
+          TopLeft="496,597" />
+        <NodeLayout
+          Size="199,42"
+          Id="Package\Transform Staging seller"
+          TopLeft="517,676" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="578.5,173">
@@ -3486,10 +3934,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="222,42"
-          Id="Package\Transform Staging order item"
-          TopLeft="495,315" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
           TopLeft="580,263">
@@ -3524,10 +3968,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="216,42"
-          Id="Package\Transform Staging Payment"
-          TopLeft="499,412" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 2]"
           TopLeft="606.5,357">
@@ -3550,10 +3990,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="210,42"
-          Id="Package\Transform Staging Product"
-          TopLeft="498,509" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
           TopLeft="605,454">
@@ -3576,10 +4012,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="285,42"
-          Id="Package\Transform Staging product category name"
-          TopLeft="496,597" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 4]"
           TopLeft="603,551">
@@ -3614,10 +4046,6 @@
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="199,42"
-          Id="Package\Transform Staging seller"
-          TopLeft="517,676" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 5]"
           TopLeft="638.5,639">
@@ -3659,33 +4087,37 @@
     design-time-name="Package\Transform Staging Customer">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="177,42"
+          Id="Package\Transform Staging Customer\OLE DB Destination"
+          TopLeft="582,469" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Transform Staging Customer\Derived Column"
+          TopLeft="591,205" />
         <NodeLayout
           Size="157,42"
           Id="Package\Transform Staging Customer\OLE DB Source"
           TopLeft="592,140" />
         <NodeLayout
-          Size="177,42"
-          Id="Package\Transform Staging Customer\OLE DB Destination"
-          TopLeft="582,329" />
-        <NodeLayout
-          Size="158,42"
-          Id="Package\Transform Staging Customer\Derived Column"
-          TopLeft="592,237" />
+          Size="99,42"
+          Id="Package\Transform Staging Customer\Sort"
+          TopLeft="613,284" />
         <EdgeLayout
           Id="Package\Transform Staging Customer.Paths[OLE DB Source Output]"
-          TopLeft="670.75,182">
+          TopLeft="670.25,182">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,55"
+              EndConnector="0,23"
               Start="0,0"
-              End="0,47.5">
+              End="0,15.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,47.5" />
+                    End="0,15.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3696,18 +4128,82 @@
         </EdgeLayout>
         <EdgeLayout
           Id="Package\Transform Staging Customer.Paths[Derived Column Output]"
-          TopLeft="670.75,279">
+          TopLeft="666.25,247">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,50"
+              EndConnector="0,37"
               Start="0,0"
-              End="0,42.5">
+              End="0,29.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,42.5" />
+                    End="0,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="167,42"
+          Id="Package\Transform Staging Customer\Derived Column 1"
+          TopLeft="580,359" />
+        <EdgeLayout
+          Id="Package\Transform Staging Customer.Paths[Sort Output]"
+          TopLeft="663,326">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,33"
+              Start="0,0"
+              End="0,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="216,42"
+          Id="Package\Transform Staging Customer\Slowly Changing Dimension"
+          TopLeft="596,424" />
+        <EdgeLayout
+          Id="Package\Transform Staging Customer.Paths[Derived Column Output1]"
+          TopLeft="663.5,401">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="40.5,23"
+              Start="0,0"
+              End="40.5,15.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.5"
+                    Point2="0,11.5"
+                    Point3="4,11.5" />
+                  <mssgle:LineSegment
+                    End="36.5,11.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="36.5,11.5"
+                    Point2="40.5,11.5"
+                    Point3="40.5,15.5" />
+                  <mssgle:LineSegment
+                    End="40.5,15.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -3720,7 +4216,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging Customer\OLE DB Source">
+    design-time-name="Package\Transform Staging Customer\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3733,7 +4229,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging Customer\OLE DB Destination">
+    design-time-name="Package\Transform Staging Customer\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3834,7 +4330,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging order\OLE DB Destination">
+    design-time-name="Package\Transform Staging order\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3847,7 +4343,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging order\OLE DB Source">
+    design-time-name="Package\Transform Staging order\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3948,7 +4444,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging order item\OLE DB Destination">
+    design-time-name="Package\Transform Staging order item\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -3961,7 +4457,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging order item\OLE DB Source">
+    design-time-name="Package\Transform Staging order item\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4050,7 +4546,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging Payment\OLE DB Source">
+    design-time-name="Package\Transform Staging Payment\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4063,7 +4559,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging Payment\OLE DB Destination">
+    design-time-name="Package\Transform Staging Payment\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4164,7 +4660,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging Product\OLE DB Source">
+    design-time-name="Package\Transform Staging Product\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4177,7 +4673,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging Product\OLE DB Destination">
+    design-time-name="Package\Transform Staging Product\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4240,7 +4736,7 @@
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging product category name\OLE DB Source">
+    design-time-name="Package\Transform Staging product category name\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -4253,7 +4749,7 @@
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Transform Staging product category name\OLE DB Destination">
+    design-time-name="Package\Transform Staging product category name\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
