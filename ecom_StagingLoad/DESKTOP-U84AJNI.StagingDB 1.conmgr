@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="DESKTOP-U84AJNI.StagingDB 1"
+  DTS:DTSID="{2E5F2E18-6900-49CE-B1CE-55BC833FB4A6}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=DESKTOP-U84AJNI;Initial Catalog=StagingDB;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-ecom_StagingLoad-{2E5F2E18-6900-49CE-B1CE-55BC833FB4A6}DESKTOP-U84AJNI.StagingDB;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
