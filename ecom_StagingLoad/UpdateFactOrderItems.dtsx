@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="UpdateFactOrderItems"
   DTS:PackageType="5"
-  DTS:VersionBuild="41"
-  DTS:VersionGUID="{83DA0489-7A3D-4734-A2E7-B9C988E263F8}">
+  DTS:VersionBuild="44"
+  DTS:VersionGUID="{00D5601F-0E01-4007-A1B2-FBACE44F40A7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
