@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="ETL Data Transformation"
   DTS:PackageType="5"
-  DTS:VersionBuild="206"
-  DTS:VersionGUID="{F6B916B6-A7D6-41F9-81FD-5807E70FF508}">
+  DTS:VersionBuild="212"
+  DTS:VersionGUID="{8BE73273-6F2C-45DF-B005-A418EE0F91B8}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -39,7 +39,7 @@
       DTS:Namespace="User"
       DTS:ObjectName="CurrentDate">
       <DTS:VariableValue
-        DTS:DataType="7">5/1/2025 3:35:55 AM</DTS:VariableValue>
+        DTS:DataType="7">5/1/2025 2:53:37 PM</DTS:VariableValue>
     </DTS:Variable>
   </DTS:Variables>
   <DTS:Executables>
@@ -425,6 +425,28 @@ where [refTable].[full_date] = ?</property>
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
                           name="FriendlyExpression">(DT_DBDATE)order_purchase_timestamp</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Fact table\Derived Column.Outputs[Derived Column Output].Columns[accm_txn_create_time]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Fact table\Derived Column.Outputs[Derived Column Output].Columns[accm_txn_create_time]"
+                      name="accm_txn_create_time"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -1308,6 +1330,12 @@ where [refTable].[full_date] = ?</property>
                       cachedPrecision="20"
                       externalMetadataColumnId="Package\Fact table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[quantity]"
                       lineageId="Package\Fact table\Merge Join 2.Outputs[Merge Join Output].Columns[quantity]" />
+                    <inputColumn
+                      refId="Package\Fact table\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[accm_txn_create_time]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="accm_txn_create_time"
+                      externalMetadataColumnId="Package\Fact table\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[accm_txn_create_time]"
+                      lineageId="Package\Fact table\Derived Column.Outputs[Derived Column Output].Columns[accm_txn_create_time]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -5493,13 +5521,13 @@ where [refTable].[seller_id] = ?</property>
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">(DT_DBTIMESTAMP)[GETDATE]()</property>
+                          name="Expression">[GETDATE]()</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">(DT_DBTIMESTAMP)GETDATE()</property>
+                          name="FriendlyExpression">GETDATE()</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -5671,7 +5699,7 @@ where [refTable].[seller_id] = ?</property>
                     <externalMetadataColumn
                       refId="Package\Transform Staging Product and load product demension\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[product_category_name]"
                       dataType="wstr"
-                      length="50"
+                      length="100"
                       name="product_category_name" />
                     <externalMetadataColumn
                       refId="Package\Transform Staging Product and load product demension\Insert Destination.Inputs[OLE DB Destination Input].ExternalColumns[start_date]"
@@ -7587,14 +7615,6 @@ where [refTable].[seller_id] = ?</property>
       <GraphLayout
         Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="108,42"
-          Id="Package\Fact table\Sort 3"
-          TopLeft="1198.33333333333,260" />
-        <NodeLayout
-          Size="108,42"
-          Id="Package\Fact table\Sort 1"
-          TopLeft="820,251" />
-        <NodeLayout
           Size="99,42"
           Id="Package\Fact table\Sort"
           TopLeft="636,241" />
@@ -7611,9 +7631,21 @@ where [refTable].[seller_id] = ?</property>
           Id="Package\Fact table\order"
           TopLeft="802,141" />
         <NodeLayout
+          Size="122,42"
+          Id="Package\Fact table\Date key"
+          TopLeft="1029,994.666666666667" />
+        <NodeLayout
+          Size="133,42"
+          Id="Package\Fact table\Merge Join"
+          TopLeft="767,356" />
+        <NodeLayout
           Size="177,42"
           Id="Package\Fact table\OLE DB Destination"
           TopLeft="1003,1075.66666666667" />
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Fact table\Product Key"
+          TopLeft="991,756.666666666667" />
         <NodeLayout
           Size="142,42"
           Id="Package\Fact table\Merge Join 1"
@@ -7623,25 +7655,13 @@ where [refTable].[seller_id] = ?</property>
           Id="Package\Fact table\Merge Join 2"
           TopLeft="975,548.333333333334" />
         <NodeLayout
-          Size="133,42"
-          Id="Package\Fact table\Merge Join"
-          TopLeft="767,356" />
-        <NodeLayout
-          Size="122,42"
-          Id="Package\Fact table\Date key"
-          TopLeft="1029,994.666666666667" />
-        <NodeLayout
-          Size="158,42"
-          Id="Package\Fact table\Derived Column"
-          TopLeft="1015,917.666666666667" />
-        <NodeLayout
           Size="228,42"
           Id="Package\Fact table\stg_order_items_with_quantity"
           TopLeft="1225,140" />
         <NodeLayout
-          Size="139,42"
-          Id="Package\Fact table\Product Key"
-          TopLeft="991,756.666666666667" />
+          Size="158,42"
+          Id="Package\Fact table\Derived Column"
+          TopLeft="1015,917.666666666667" />
         <NodeLayout
           Size="129,42"
           Id="Package\Fact table\Seller Key"
@@ -7651,9 +7671,17 @@ where [refTable].[seller_id] = ?</property>
           Id="Package\Fact table\Sort 2"
           TopLeft="1004,257" />
         <NodeLayout
+          Size="108,42"
+          Id="Package\Fact table\Sort 3"
+          TopLeft="1198.33333333333,260" />
+        <NodeLayout
           Size="152,42"
           Id="Package\Fact table\Customery key"
           TopLeft="976,662.666666666667" />
+        <NodeLayout
+          Size="108,42"
+          Id="Package\Fact table\Sort 1"
+          TopLeft="820,251" />
         <EdgeLayout
           Id="Package\Fact table.Paths[Sort Output3]"
           TopLeft="1252.33333333333,302">
@@ -8215,19 +8243,6 @@ where [refTable].[seller_id] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Fact table\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
     design-time-name="Package\Fact table\Date key">
     <Properties>
       <Property>
@@ -8251,7 +8266,7 @@ where [refTable].[seller_id] = ?</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Fact table\stg_order_items_with_quantity">
+    design-time-name="Package\Fact table\OLE DB Destination">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -8283,6 +8298,19 @@ where [refTable].[seller_id] = ?</property>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Fact table\stg_order_items_with_quantity">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -8396,9 +8424,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8420,9 +8446,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8456,9 +8480,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8552,9 +8574,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8588,9 +8608,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8612,9 +8630,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8672,9 +8688,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -8825,9 +8839,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8849,9 +8861,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8873,9 +8883,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -8909,9 +8917,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9005,9 +9011,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9029,9 +9033,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9053,9 +9055,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
@@ -9137,7 +9137,7 @@ where [refTable].[seller_id] = ?</property>
     design-time-name="Package\Transform Staging seller and load dimension">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="157,42"
           Id="Package\Transform Staging seller and load dimension\OLE DB Source"
@@ -9181,9 +9181,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9205,9 +9203,7 @@ where [refTable].[seller_id] = ?</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
